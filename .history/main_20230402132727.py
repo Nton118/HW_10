@@ -36,12 +36,14 @@ class Phone(Field):
 
 
 class Record:
+    count = 0
     
     def __init__(self, name:Name, phone:Phone=None):
         self.name = name
         self.phones = []
         if phone:
            self.phones.append(phone) 
+        Record.count += 1
     
     def add_phone(self, phone:Phone):
         self.phones.append(phone) 
@@ -87,11 +89,10 @@ class AddressBook(UserDict):
     def show_all(self):
         output = ""
         for contact in self.data.keys():
-            output += f"{contact}: {'; '.join([phone.value for phone in self.data.get(contact).phones])}\n"
-        output += f'Total: {len(self.data)} contacts.'
+            output += (f"{contact}: {'; '.join([phone.value for phone in self.data.get(contact).phones])}") 
         return output
     
-is_ended = False   
+   
     
 book1 = AddressBook()
 

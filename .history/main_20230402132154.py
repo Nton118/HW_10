@@ -36,12 +36,14 @@ class Phone(Field):
 
 
 class Record:
+    count = 0
     
     def __init__(self, name:Name, phone:Phone=None):
         self.name = name
         self.phones = []
         if phone:
            self.phones.append(phone) 
+        Record.count += 1
     
     def add_phone(self, phone:Phone):
         self.phones.append(phone) 
@@ -70,7 +72,8 @@ class Record:
             self.phones.pop(num-1)
             self.phones.insert(num-1, phone_new)  
             
-           
+
+            
 
 class AddressBook(UserDict):
     
@@ -87,11 +90,10 @@ class AddressBook(UserDict):
     def show_all(self):
         output = ""
         for contact in self.data.keys():
-            output += f"{contact}: {'; '.join([phone.value for phone in self.data.get(contact).phones])}\n"
-        output += f'Total: {len(self.data)} contacts.'
+            output += (f"{contact}: {'; '.join([phone.value for phone in self.data.get(contact).phones])}") 
         return output
     
-is_ended = False   
+   
     
 book1 = AddressBook()
 
@@ -233,18 +235,9 @@ def help(*args):
         raise IndexError 
     return f"available commands: {', '.join(k for k in COMMANDS.keys())}"  
 
-@input_error  
-def exit(*args):
-    if args != ('',):
-        raise IndexError
-    global is_ended
-    is_ended = True
-    return ('Good bye!')
-
-
 COMMANDS = {'hello':greet, 'add':add, 'change':change, 'phone': phone, 
             'show all': show_all, 'del phone':del_phone, 
-            'del contact':del_contact, 'good bye': exit, 'close': exit, 'exit': exit, 'help':help}
+            'del contact':del_contact, 'help':help}
 
 def command_parser(line: str): 
     
@@ -262,9 +255,11 @@ def handler(command, args):
 
 def main():
 
-    while not is_ended:
+    while True:
         s = input(">>>")
-
+        if s == 'good bye' or s ==  'close' or  s == 'exit':
+            print('Good bye!')
+            break
         command, args = command_parser(s)
         print(handler(command, args))
         

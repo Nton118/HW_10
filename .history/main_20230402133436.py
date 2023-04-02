@@ -88,7 +88,7 @@ class AddressBook(UserDict):
         output = ""
         for contact in self.data.keys():
             output += f"{contact}: {'; '.join([phone.value for phone in self.data.get(contact).phones])}\n"
-        output += f'Total: {len(self.data)} contacts.'
+        output += f' total {len(self.data)} contacts'
         return output
     
 is_ended = False   
