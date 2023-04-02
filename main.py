@@ -76,8 +76,7 @@ class AddressBook(UserDict):
     
     def add_record(self,record:Record):
         self.data.update({record.name.value:record})
-        
-        
+             
     def remove_record(self, contact:str):
         return self.data.pop(contact)
         
